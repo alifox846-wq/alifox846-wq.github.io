@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlignWin - Strategy Call</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    .logo-img { width: 44px; height: 44px; object-fit: contain; }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Header -->
+  <header class="absolute top-6 left-6 z-30 flex items-center gap-3">
+    <a href="index.html" aria-label="Go to home">
+      <img src="images/logo.png" class="logo-img" alt="AlignWin Logo">
+    </a>
+    <a href="index.html" class="text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg shadow-md font-bold">
+      ← Back to Home
+    </a>
+  </header>
+
+  <!-- Main Section -->
+  <section class="relative w-full h-screen flex items-center justify-center">
+    <!-- Background Image -->
+<div class="absolute inset-0">
+  <!-- Hero Background Image -->
+  <div class="absolute inset-0"
+       style="background-image: url('images/background.jpg');
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;">
+  </div>
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black opacity-50"></div>
+</div>
+
+
+    <!-- Form Container -->
+    <div class="relative max-w-md w-full bg-white rounded-2xl p-8 shadow-2xl z-20 text-center space-y-6 fade-in">
+      <h2 class="text-3xl md:text-4xl font-bold text-orange-500 mb-2">Get started with AlignWin</h2>
+      <p class="text-gray-700 text-sm mb-4">Please fill out the form below or call <span class="font-semibold">your number here</span></p>
+
+      <!-- Form -->
+      <form id="strategyForm" class="space-y-4 text-left">
+        <!-- Hidden fields -->
+        <input type="hidden" name="access_key" value="f271c6f0-60e5-43e9-adbd-4f30082b280a">
+        <input type="hidden" name="subject" value="New Strategy Call Lead - AlignWin">
+        <input type="hidden" name="from_name" value="AlignWin Website">
+        <input type="hidden" name="redirect" value="success.html">
+
+        <!-- Honeypot -->
+        <div style="display:none;">
+          <label>Leave blank</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- Name -->
+        <div class="fade-in" style="animation-delay: 0.1s;">
+          <label class="block text-gray-600 text-sm mb-1">Full Name*</label>
+          <input type="text" name="full_name" placeholder="Your name" required
+                 class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        </div>
+
+        <!-- Email -->
+        <div class="fade-in" style="animation-delay: 0.2s;">
+          <label class="block text-gray-600 text-sm mb-1">Business Email*</label>
+          <input type="email" name="email" placeholder="Your business email" required
+                 class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        </div>
+
+        <!-- Phone -->
+        <div class="fade-in" style="animation-delay: 0.3s;">
+          <label class="block text-gray-600 text-sm mb-1">Work Phone*</label>
+          <input type="tel" name="phone" placeholder="e.g. 650-123-4567" required
+                 class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        </div>
+
+        <!-- Campaign Type -->
+        <div class="fade-in" style="animation-delay: 0.4s;">
+          <label class="block text-gray-600 text-sm mb-1">Type of call campaign*</label>
+          <select name="campaign_type" required
+                  class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+            <option disabled selected value="">Please select</option>
+            <option value="b2b">B2B Cold Calling</option>
+            <option value="appointment">Appointment Setting</option>
+            <option value="lead">Lead Generation</option>
+          </select>
+        </div>
+
+        <!-- Submit -->
+        <div class="text-center fade-in" style="animation-delay: 0.6s;">
+          <button type="submit"
+                  class="bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transform transition duration-300">
+            BOOK YOUR STRATEGY CALL
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('strategyForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+          // Redirect to success.html after successful submission
+          window.location.href = 'success.html';
+        } else {
+          alert('Submission failed. Check your access key.');
+        }
+      } catch (err) {
+        alert('Submission failed. Check your internet connection.');
+      }
+    });
+  </script>
+
+</body>
+</html>
