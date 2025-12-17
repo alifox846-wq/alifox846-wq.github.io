@@ -1,158 +1,64 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AlignWin</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlignWin</title>
+  <link rel="preconnect" href="https://x.com">
+<link rel="dns-prefetch" href="https://x.com">
+ <!-- Tailwind (LOCAL BUILD) -->
+  <link rel="stylesheet" href="dist/styles.css">
 
-<style>
-  /* Prevent jump-under fixed header on anchor navigation */
-  :root { --header-height: 72px; }
-  html { scroll-behavior: smooth; }
-  section, footer { scroll-margin-top: calc(var(--header-height) + 16px); }
-  body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-  /* Smooth Fade-Up Animations */
-  .fade-slide-up { opacity:0; transform:translateY(25px); animation:fadeSlideUp 1s forwards; }
-  .fade-slide-up-delay { opacity:0; transform:translateY(25px); animation:fadeSlideUp 1s forwards; animation-delay:0.35s; }
-  @keyframes fadeSlideUp { to { opacity:1; transform:translateY(0); } }
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <style>
+    :root { --header-height: 72px; }
+    html { scroll-behavior: smooth; }
+    section, footer { scroll-margin-top: calc(var(--header-height) + 16px); }
+    body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-  /* Gradient headline */
-  .gradient-text {
-    background: linear-gradient(90deg, #FF8C00, #FF3D00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+    .logo-img { width:44px; height:44px; object-fit:contain; }
+    .header-bg { background: rgba(255,255,255,0.98); backdrop-filter: blur(4px); }
 
-  /* Hero text shadow/glow */
-  .hero-shadow { text-shadow: 2px 2px 16px rgba(0,0,0,0.6); }
+    .btn-gradient { background: linear-gradient(90deg, #FF8C00, #FF3D00); transition: all 0.3s ease; }
+    .btn-gradient:hover { transform: scale(1.05); background: linear-gradient(90deg, #FF3D00, #FF8C00); }
 
-  /* Logo */
-  .logo-img { width: 44px; height: 44px; object-fit: contain; }
+    .hero-vh { height: calc(var(--vh, 1vh) * 100); }
 
-  /* Scroll Indicator */
-  .scroll-down {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 26px;
-    height: 42px;
-    border: 2px solid #fff;
-    border-radius: 14px;
-  }
-  .scroll-down::after {
-    content: "";
-    display: block;
-    width: 7px;
-    height: 7px;
-    margin: 5px auto;
-    background: #fff;
-    border-radius: 50%;
-    animation: scroll 1.2s infinite;
-  }
-  @keyframes scroll {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(10px); }
-    60% { transform: translateY(5px); }
-  }
+    @media (max-width: 768px){ .logo-img{ width:40px; height:40px; } }
 
-  /* Floating accent shapes */
-  .shape-circle {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.4;
-    animation: float 8s ease-in-out infinite alternate;
-  }
-  .shape-1 { width: 200px; height: 200px; background: #FF8C00; top: -50px; left: -50px; }
-  .shape-2 { width: 300px; height: 300px; background: #FF3D00; bottom: -100px; right: -80px; }
-  @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(30px); } }
+    .fade-slide-up { opacity:0; transform:translateY(20px); animation:fadeSlideUp 1s forwards; }
+    .fade-slide-up-delay { opacity:0; transform:translateY(20px); animation:fadeSlideUp 1s forwards; animation-delay:0.3s; }
+    @keyframes fadeSlideUp { to { opacity:1; transform:translateY(0); } }
 
-  /* Gradient button hover */
-  .btn-gradient {
-    background: linear-gradient(90deg, #FF8C00, #FF3D00);
-    transition: all 0.3s ease;
-  }
-  .btn-gradient:hover {
-    transform: scale(1.05);
-    background: linear-gradient(90deg, #FF3D00, #FF8C00);
-  }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+    .animate-fadeIn { animation: fadeIn 1s ease forwards; }
 
-  /* Floating particles */
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.2;
-    background: linear-gradient(135deg, #FF8C00, #FF3D00);
-    filter: blur(4px);
-    animation: particleMove linear infinite;
-  }
-  @keyframes particleMove {
-    0% { transform: translateY(0) translateX(0) scale(1); }
-    50% { transform: translateY(-50px) translateX(30px) scale(1.2); }
-    100% { transform: translateY(0) translateX(0) scale(1); }
-  }
+    @keyframes bounceIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .animate-bounce { animation: bounceIcon 1.2s infinite; }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
 
-  /* Light streaks */
-  .streak {
-    position: absolute;
-    width: 2px;
-    height: 150px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0));
-    opacity: 0.3;
-    animation: streakMove linear infinite;
-  }
-  @keyframes streakMove {
-    0% { transform: translateY(0) rotate(10deg); }
-    50% { transform: translateY(-200px) rotate(15deg); }
-    100% { transform: translateY(0) rotate(10deg); }
-  }
-
-  /* Floating SVG icons */
-  .svg-icon {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    opacity: 0.2;
-    animation: svgFloat linear infinite;
-    filter: drop-shadow(0px 0px 6px rgba(255,255,255,0.3));
-  }
-  @keyframes svgFloat {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-30px) rotate(15deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-  }
-
-  /* Extra small helpers */
-  .animate-fadeIn { animation: fadeIn 1s ease forwards; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
-  .animate-bounce { animation: bounceIcon 1.2s infinite; }
-  @keyframes bounceIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-  /* testimonial dot styles */
-  .dot { display:inline-block; width:10px; height:10px; background:#E5E7EB; border-radius:9999px; cursor:pointer; }
-  .dot.active { background:#FB923C; }
-
-</style>
+    .dot { width: 10px; height: 10px; background: #d1d5db; border-radius: 50%; display: inline-block; cursor: pointer; transition: background 0.3s; }
+    .dot.active { background: #f97316; }
+  </style>
 </head>
-<body class="bg-white">
+<body class="antialiased text-gray-900">
 
 <!-- ================= HEADER ================= -->
-<header class="w-full bg-white shadow-md py-4 fixed top-0 left-0 z-50" style="height:var(--header-height);">
-  <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
-    <div class="flex items-center space-x-3">
-      <!-- Logo: click will reload the page (acts like restart) -->
-     <a href="index.html" aria-label="Go to home">
-  <img src="images/logo.png" class="logo-img" alt="Logo">
-</a>
-      <span class="text-xl md:text-2xl font-bold text-gray-800 tracking-tight">AlignWin</span>
-    </div>
-
-    <!-- UPDATED NAVIGATION (anchors connected to sections) -->
-    <nav class="flex flex-wrap justify-center items-center space-x-4 md:space-x-6 text-gray-700 font-medium">
+<header class="w-full header-bg shadow-sm fixed top-0 left-0 z-50" style="height:var(--header-height);">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 h-full">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="images/logo.png" class="logo-img" alt="AlignWin logo">
+      <span class="hidden sm:inline text-lg font-bold text-gray-800">AlignWin</span>
+    </a>
+    <nav class="hidden lg:flex items-center space-x-6 text-gray-700 font-medium">
       <a href="#hero" class="hover:text-orange-500 transition">Home</a>
       <a href="#services" class="hover:text-orange-500 transition">Services</a>
       <a href="#advantage" class="hover:text-orange-500 transition">The AlignWin Difference</a>
@@ -160,135 +66,75 @@
       <a href="#about" class="hover:text-orange-500 transition">About</a>
       <a href="#contact" class="hover:text-orange-500 transition">Contact</a>
     </nav>
+    <a href="strategy.html" class="hidden lg:inline-block btn-gradient text-white font-semibold py-2 px-4 rounded-xl shadow-lg transition hover:opacity-95">BOOK YOUR STRATEGY CALL</a>
 
-    <!-- CTA Button -->
-    <a href="strategy.html" class="btn-gradient text-white font-semibold py-2 px-5 rounded-xl shadow-lg transition hover:opacity-90">
-      BOOK YOUR STRATEGY CALL
-    </a>
+    <nav class="flex lg:hidden items-center gap-4 text-gray-700 font-medium">
+      <a href="#hero" class="text-sm hover:text-orange-500 transition">Home</a>
+      <a href="#services" class="text-sm hover:text-orange-500 transition">Services</a>
+      <a href="#about" class="text-sm hover:text-orange-500 transition">About Us</a>
+      <a href="#contact" class="text-sm hover:text-orange-500 transition">Contact</a>
+    </nav>
+
+    <div class="lg:hidden flex items-center gap-2">
+      <a href="strategy.html" class="bg-orange-500 text-white px-3 py-2 rounded-lg text-sm font-semibold shadow">Book</a>
+      <button id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded focus:outline-none">
+        <svg id="menu-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg id="menu-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
-  <!-- Mobile Hamburger Menu -->
-  <div class="md:hidden flex justify-center mt-4">
-    <button id="menu-btn" class="text-gray-700 focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Mobile Menu (hidden by default) -->
-  <div id="mobile-menu" class="hidden md:hidden mt-2 space-y-2 px-6 text-center">
-    <a href="#hero" class="block py-2 text-gray-700 hover:text-orange-500">Home</a>
-    <a href="#services" class="block py-2 text-gray-700 hover:text-orange-500">Services</a>
-    <a href="#advantage" class="block py-2 text-gray-700 hover:text-orange-500">The AlignWin Difference</a>
-    <a href="#testimonials" class="block py-2 text-gray-700 hover:text-orange-500">Testimonials</a>
-    <a href="#about" class="block py-2 text-gray-700 hover:text-orange-500">About</a>
-    <a href="#contact" class="block py-2 text-gray-700 hover:text-orange-500">Contact</a>
-    <a href="strategy.html" class="block py-2 text-white bg-orange-500 text-center rounded-xl font-semibold mt-2">
-      BOOK YOUR STRATEGY CALL
-    </a>
+<div
+  id="mobile-menu"
+  class="hidden lg:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50 px-6 py-4"
+>
+    <div class="flex flex-col space-y-2 text-center">
+      <a href="#advantage" class="block py-2 text-gray-700 hover:text-orange-500 transition font-medium">The AlignWin Difference</a>
+      <a href="#testimonials" class="block py-2 text-gray-700 hover:text-orange-500 transition font-medium">Testimonials</a>
+    </div>
   </div>
 </header>
 
 <script>
-  // Toggle mobile menu
-  const btn = document.getElementById('menu-btn');
-  const menu = document.getElementById('mobile-menu');
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuOpenIcon = document.getElementById('menu-open');
+  const menuCloseIcon = document.getElementById('menu-close');
 
-  btn.addEventListener('click', () => {
-    menu.classList.toggle('hidden');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    menuOpenIcon.classList.toggle('hidden');
+    menuCloseIcon.classList.toggle('hidden');
   });
 </script>
-  </div>
-</header>
+
 <!-- ================= HERO SECTION ================= -->
-<section class="relative w-full h-screen flex items-center justify-center bg-black pt-24 overflow-hidden" id="hero">
-
-  <!-- Floating accent shapes -->
-  <div class="shape-circle shape-1"></div>
-  <div class="shape-circle shape-2"></div>
-
-  <!-- Particles -->
-  <div class="particle" style="width:8px; height:8px; top:10%; left:20%; animation-duration:6s;"></div>
-  <div class="particle" style="width:6px; height:6px; top:50%; left:70%; animation-duration:8s;"></div>
-  <div class="particle" style="width:10px; height:10px; top:30%; left:50%; animation-duration:10s;"></div>
-  <div class="particle" style="width:5px; height:5px; top:80%; left:30%; animation-duration:7s;"></div>
-
-  <!-- Light streaks -->
-  <div class="streak" style="top:0; left:15%; animation-duration:3s;"></div>
-  <div class="streak" style="top:20%; left:50%; animation-duration:4s;"></div>
-  <div class="streak" style="top:40%; left:75%; animation-duration:5s;"></div>
-
-  <!-- Floating SVG Icons -->
-  <svg class="svg-icon" style="top:20%; left:25%; animation-duration:6s;" viewBox="0 0 24 24" fill="#FF8C00"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.05-.24 11.36 11.36 0 003.55.57 1 1 0 011 1v3.61a1 1 0 01-1 1A17.92 17.92 0 013 5a1 1 0 011-1h3.61a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.24 1.05l-2.2 2.2z"/></svg>
-
-  <svg class="svg-icon" style="top:50%; left:65%; animation-duration:8s;" viewBox="0 0 24 24" fill="#FF3D00"><path d="M20 2H4a2 2 0 00-2 2v16l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg>
-
-  <svg class="svg-icon" style="top:35%; left:40%; animation-duration:7s;" viewBox="0 0 24 24" fill="#FFA500"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
-
-  <!-- Background Image + Gradient Overlay -->
-  <div class="absolute inset-0 w-full h-full">
-    <!-- Hero Background Image -->
-    <div class="absolute inset-0"
-         style="background-image: url('images/background.jpg');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
-    </div>
-
-    <!-- Gradient Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-80"></div>
-  </div>
-
-  <!-- Hero Content -->
+<section id="hero" class="relative w-full hero-vh flex items-center justify-center bg-black pt-24 overflow-hidden">
+  <div class="absolute inset-0 w-full h-full bg-center bg-cover" style="background-image: url('images/background.jpg');"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80"></div>
   <div class="relative z-10 max-w-5xl px-6 text-center">
-    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 fade-slide-up gradient-text hero-shadow leading-tight tracking-tight">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 fade-slide-up hero-shadow leading-tight tracking-tight" style="background: linear-gradient(90deg, #FF8C00, #FF3D00); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
       GROWTH ALIGNED
     </h1>
-
-    <p class="text-xl md:text-2xl font-semibold text-gray-200 mb-10 fade-slide-up-delay max-w-2xl mx-auto leading-relaxed">
-      Done-For-You Cold Calling & Lead Generation
-    </p>
-    <!-- CTA -->
-    <a href="strategy.html" 
-       class="btn-gradient text-white font-semibold py-4 px-14 rounded-xl shadow-2xl fade-slide-up-delay">
-       BOOK YOUR STRATEGY CALL
-    </a>
-  </div>
-
-  <!-- Scroll Indicator -->
-  <div class="scroll-down"></div>
-
-</section>
-<!-- ================= BUILT WITH PURPOSE ================= -->
-<section class="w-full py-28 bg-gradient-to-b from-[#F8FBFF] to-white">
-  <div class="max-w-5xl mx-auto px-6 text-center">
-    <h2 class="text-5xl md:text-6xl font-extrabold text-black mb-6 fade-slide-up"> ✨ Built With Purpose </h2>
-    <p class="text-xl md:text-2xl text-gray-700 font-medium fade-slide-up-delay max-w-2xl mx-auto leading-relaxed">
-      We believe real growth happens when everyone wins: our clients, our team, and the people we reach.
-
-    </p>
+    <p class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">Done-For-You Cold Calling & Lead Generation</p>
+    <a href="strategy.html" class="inline-block btn-gradient text-white font-semibold py-3 px-8 rounded-xl shadow-2xl">BOOK YOUR STRATEGY CALL</a>
   </div>
 </section>
-<!-- ===================== SERVICES + HOW IT WORKS ===================== -->
+
+<!-- ===================== SERVICES ===================== -->
 <section id="services" class="w-full bg-white py-16 md:py-20">
   <div class="max-w-7xl mx-auto px-6">
-
-    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black text-center mb-12 md:mb-20">
-      Our Services
-    </h2>
-
-    <!-- Service Grid -->
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black text-center mb-12 md:mb-20">Our Services</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-16">
-
       <!-- Service Card 1 -->
       <div class="relative bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 transition-transform transform hover:-translate-y-2 md:hover:-translate-y-4 hover:shadow-2xl overflow-hidden">
-        <!-- Image behind -->
         <div class="absolute inset-0 w-full h-full rounded-3xl overflow-hidden z-0">
           <img src="images/service1.jpg" alt="B2B Cold Calling" class="w-full h-full object-cover opacity-30">
         </div>
-        <!-- Text content -->
         <div class="relative z-10 text-center">
           <h3 class="text-xl sm:text-2xl font-bold text-black mt-6">B2B Cold Calling</h3>
           <p class="mt-4 text-gray-700 font-medium text-sm sm:text-base md:text-lg">
@@ -296,7 +142,6 @@
           </p>
         </div>
       </div>
-
       <!-- Service Card 2 -->
       <div class="relative bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 transition-transform transform hover:-translate-y-2 md:hover:-translate-y-4 hover:shadow-2xl overflow-hidden">
         <div class="absolute inset-0 w-full h-full rounded-3xl overflow-hidden z-0">
@@ -309,7 +154,6 @@
           </p>
         </div>
       </div>
-
       <!-- Service Card 3 -->
       <div class="relative bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 transition-transform transform hover:-translate-y-2 md:hover:-translate-y-4 hover:shadow-2xl overflow-hidden">
         <div class="absolute inset-0 w-full h-full rounded-3xl overflow-hidden z-0">
@@ -322,7 +166,6 @@
           </p>
         </div>
       </div>
-
       <!-- Service Card 4 -->
       <div class="relative bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 transition-transform transform hover:-translate-y-2 md:hover:-translate-y-4 hover:shadow-2xl overflow-hidden">
         <div class="absolute inset-0 w-full h-full rounded-3xl overflow-hidden z-0">
@@ -335,204 +178,142 @@
           </p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
-
 <!-- ===================== HOW IT WORKS ===================== -->
 <section class="w-full bg-[#F8FBFF] py-16 md:py-24">
   <div class="max-w-7xl mx-auto px-6">
-
     <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black text-center mb-12 md:mb-16">
       How It Works
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-12">
 
-      <!-- Step 1: Full-List Outreach & Qualification -->
-<div class="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-black/20 text-center">
-  <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">📞</div>
+      <!-- Step 1 -->
+      <div class="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-black/20 text-center">
+        <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">📞</div>
+        <h3 class="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 flex flex-col leading-tight">
+          <span>Full-List Outreach</span>
+          <span>& Qualification</span>
+        </h3>
+        <p class="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
+          We launch a dynamic, strategic outreach campaign to activate your entire list. Our calling specialists convert cold prospects into meaningful, expert-driven conversations that establish initial engagement and drive potential leads into your sales pipeline.
+        </p>
+      </div>
 
-  <h3 class="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 flex flex-col leading-tight">
-    <span>Full-List Outreach</span>
-    <span>& Qualification</span>
-  </h3>
+      <!-- Step 2 -->
+      <div class="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-black/20 text-center">
+        <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">📝</div>
+        <h3 class="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 flex flex-col leading-tight">
+          <span>Identify</span>
+          <span>High-Value Prospects</span>
+        </h3>
+        <p class="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
+          We conduct a deep-dive qualification process to assess prospect motivation, urgency, and fit against your ideal client profile. This rigorous vetting ensures every lead passed to your team represents a true high-value opportunity with confirmed intent and readiness.
+        </p>
+      </div>
 
-  <p class="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
-    We launch a dynamic, strategic outreach campaign to activate your entire list. Our calling specialists convert cold prospects into meaningful, expert-driven conversations that establish initial engagement and drive potential leads into your sales pipeline.
-  </p>
-</div>
+      <!-- Step 3 -->
+      <div class="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-black/20 text-center">
+        <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">🚀</div>
+        <h3 class="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 flex flex-col leading-tight">
+          <span>Motivated Leads</span>
+          <span>Instant Delivery</span>
+        </h3>
+        <p class="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
+          Once a high-value, qualified prospect is identified and their readiness confirmed, they are immediately delivered to your sales team in real-time. This ensures zero delay, allowing you to engage instantly for the best possibility of conversion.
+        </p>
+      </div>
 
-<!-- Step 2: Identify High-Value Prospects -->
-<div class="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-black/20 text-center">
-  <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">📝</div>
-
-  <h3 class="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 flex flex-col leading-tight">
-    <span>Identify</span>
-    <span>High-Value Prospects</span>
-  </h3>
-
-  <p class="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
-    We conduct a deep-dive qualification process to assess prospect motivation, urgency, and fit against your ideal client profile. This rigorous vetting ensures every lead passed to your team represents a true high-value opportunity with confirmed intent and readiness.
-  </p>
-</div>
-
-<!-- Step 3: Motivated Leads, Instant Delivery -->
-<div class="bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-black/20 text-center">
-  <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">🚀</div>
-
-  <h3 class="text-lg sm:text-xl font-bold text-black mb-2 sm:mb-3 flex flex-col leading-tight">
-    <span>Motivated Leads</span>
-    <span>Instant Delivery</span>
-  </h3>
-
-  <p class="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
-    Once a high-value, qualified prospect is identified and their readiness confirmed, they are immediately delivered to your sales team in real-time. This ensures zero delay, allowing you to engage instantly for the best possibility of conversion.
-  </p>
-  </div>
-</section>
-<!-- ================= CTA ================= -->
-    <div class="mt-16 md:mt-20 text-center">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black mb-6 leading-tight">
-        Ready to Align and Win?
-      </h2>
-      <p class="text-sm sm:text-base md:text-lg text-gray-700 font-medium mb-8 max-w-2xl mx-auto leading-relaxed">
-        Book your strategy call today and let's discuss how we can skyrocket your business growth.
-      </p>
-      <a href="strategy.html" class="inline-block bg-black text-white font-semibold text-base sm:text-lg md:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-lg hover:bg-gray-900 transition transform hover:scale-105">
-        Get Your Growth Strategy
-
-      </a>
     </div>
-    </section>
-<!-- ===================== The AlignWin Difference ===================== -->
+</section>
+
+<!-- ===================== THE ALIGNWIN DIFFERENCE ===================== -->
 <section id="advantage" class="max-w-7xl mx-auto px-6 py-20 md:py-28">
   <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-black text-center mb-12 md:mb-20 fade-slide-up">
     The AlignWin Difference
   </h2>
-
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
 
-    <!-- CARD 1: Close More Deals -->
-<div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
-  <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-blue-500" viewBox="0 0 64 64" fill="none">
-      <rect x="10" y="30" width="8" height="24" rx="2" fill="#3B82F6"/>
-      <rect x="26" y="20" width="8" height="34" rx="2" fill="#3B82F6"/>
-      <rect x="42" y="10" width="8" height="44" rx="2" fill="#3B82F6"/>
-    </svg>
-    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Close More Deals</h3>
-  </div>
+    <!-- CARD 1 -->
+    <div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
+      <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-blue-500" viewBox="0 0 64 64" fill="none">
+          <rect x="10" y="30" width="8" height="24" rx="2" fill="#3B82F6"/>
+          <rect x="26" y="20" width="8" height="34" rx="2" fill="#3B82F6"/>
+          <rect x="42" y="10" width="8" height="44" rx="2" fill="#3B82F6"/>
+        </svg>
+        <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Close More Deals</h3>
+      </div>
+      <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
+        We handle all prospecting; your team commits to <span class="font-bold text-orange-500">closing the deals</span>, ensuring a <span class="font-bold text-orange-500">predictable, high-conversion path to revenue growth.</span>
+      </p>
+    </div>
 
-  <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
-    We handle all prospecting; your team commits to 
-    <span class="font-bold text-orange-500">closing the deals</span>, ensuring a 
-    <span class="font-bold text-orange-500">predictable, high-conversion path to revenue growth.</span>
-  </p>
-</div>
+    <!-- CARD 2 -->
+    <div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
+      <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-green-500" viewBox="0 0 64 64" fill="none">
+          <rect x="8" y="20" width="48" height="24" rx="4" fill="#10B981"/>
+          <circle cx="32" cy="32" r="6" fill="white"/>
+          <path d="M32 26v12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M26 32h12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Save Thousands $$</h3>
+      </div>
+      <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
+        Skip the high cost and risk of internal hiring; invest a <span class="font-bold text-orange-500">fraction of the cost</span> in our expert team for the <span class="font-bold text-orange-500">most financially sound path to scaling.</span>
+      </p>
+    </div>
 
+    <!-- CARD 3 -->
+    <div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
+      <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-purple-500" viewBox="0 0 64 64" fill="none">
+          <path d="M12 32c0 0 10-20 24-20s24 20 24 20-10-12-24-12-24 12-24 12z" fill="#8B5CF6"/>
+          <path d="M32 12v20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M24 24l16 0" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Enjoy More Freedom</h3>
+      </div>
+      <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
+        Reclaim your schedule and mental capacity by offloading endless calls, allowing you to focus only on <span class="font-bold text-orange-500">high-level, strategic work.</span>
+      </p>
+    </div>
 
-    <!-- CARD 2: Save Thousands $$ -->
-<div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
-  <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-green-500" viewBox="0 0 64 64" fill="none">
-      <rect x="8" y="20" width="48" height="24" rx="4" fill="#10B981"/>
-      <circle cx="32" cy="32" r="6" fill="white"/>
-      <path d="M32 26v12" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      <path d="M26 32h12" stroke="white" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Save Thousands $$</h3>
-  </div>
-
-  <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
-    Skip the high cost and risk of internal hiring; invest a 
-    <span class="font-bold text-orange-500">fraction of the cost</span> 
-    in our expert team for the 
-    <span class="font-bold text-orange-500">most financially sound path to scaling.</span>
-  </p>
-</div>
-
-<!-- CARD 3: Enjoy More Freedom -->
-<div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
-  <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-purple-500" viewBox="0 0 64 64" fill="none">
-      <path d="M12 32c0 0 10-20 24-20s24 20 24 20-10-12-24-12-24 12-24 12z" fill="#8B5CF6"/>
-      <path d="M32 12v20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-      <path d="M24 24l16 0" stroke="white" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Enjoy More Freedom</h3>
-  </div>
-
-  <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
-    Reclaim your schedule and mental capacity by offloading endless calls, allowing you to focus only on 
-    <span class="font-bold text-orange-500">high-level, strategic work.</span>
-  </p>
-</div>
-
-    <!-- CARD 4: Save Hours of Time -->
-<div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
-  <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-red-500" viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="28" stroke="#EF4444" stroke-width="4"/>
-      <path d="M32 16v16l12 6" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
-    </svg>
-    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Save Hours of Time</h3>
-  </div>
-
-  <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
-    Stop sacrificing your valuable time on unproductive outreach; we ensure every minute you spend is on a 
-    <span class="font-bold text-orange-500">qualified, ready-to-buy opportunity.</span>
-  </p>
-</div>
+    <!-- CARD 4 -->
+    <div class="group relative rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-2xl bg-white transition transform hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-3xl fade-slide-up-delay border border-gray-100">
+      <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 sm:h-16 sm:w-16 text-red-500" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="28" stroke="#EF4444" stroke-width="4"/>
+          <path d="M32 16v16l12 6" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Save Hours of Time</h3>
+      </div>
+      <p class="text-gray-700 leading-relaxed text-sm sm:text-lg">
+        Stop sacrificing your valuable time on unproductive outreach; we ensure every minute you spend is on a <span class="font-bold text-orange-500">qualified, ready-to-buy opportunity.</span>
+      </p>
+    </div>
 
   </div> 
 </section>
-
-<!-- ===================== EXTRA STYLES ===================== -->
-<style>
-  .fade-slide-up { opacity:0; transform:translateY(20px); animation:fadeSlideUp 1s forwards; }
-  .fade-slide-up-delay { opacity:0; transform:translateY(20px); animation:fadeSlideUp 1s forwards; animation-delay:0.3s; }
-  @keyframes fadeSlideUp { to { opacity:1; transform:translateY(0); } }
-</style>
-
 <!-- ===================== TESTIMONIALS SECTION ===================== -->
-<style>
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
-  .animate-fadeIn { animation: fadeIn 1s ease forwards; }
-
-  @keyframes bounceIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-  .animate-bounce { animation: bounceIcon 1.2s infinite; }
-  .delay-100 { animation-delay: 0.1s; }
-  .delay-200 { animation-delay: 0.2s; }
-  .delay-300 { animation-delay: 0.3s; }
-  .delay-400 { animation-delay: 0.4s; }
-  .delay-500 { animation-delay: 0.5s; }
-
-  /* Dot styles */
-  .dot { width: 10px; height: 10px; background: #d1d5db; border-radius: 50%; display: inline-block; cursor: pointer; transition: background 0.3s; }
-  .dot.active { background: #f97316; }
-</style>
-
 <section id="testimonials" class="py-16 text-center bg-gray-50 relative">
-  <!-- Title -->
   <h2 class="text-3xl md:text-4xl font-extrabold text-black mb-4">Testimonials</h2>
   <div class="w-20 h-1 bg-orange-500 mx-auto mb-8 md:mb-12 rounded-full"></div>
 
   <!-- Arrows -->
-  <button id="prev" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white p-2 md:p-3 rounded-full shadow-md hover:bg-gray-100 z-20">
-    &#10094;
-  </button>
-  <button id="next" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white p-2 md:p-3 rounded-full shadow-md hover:bg-gray-100 z-20">
-    &#10095;
-  </button>
+  <button id="prev" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white p-2 md:p-3 rounded-full shadow-md hover:bg-gray-100 z-20">&#10094;</button>
+  <button id="next" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white p-2 md:p-3 rounded-full shadow-md hover:bg-gray-100 z-20">&#10095;</button>
 
-  <!-- Slider Container -->
+  <!-- Slider -->
   <div id="slider" class="testimonials-slider max-w-6xl mx-auto px-4 flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide">
-    
     <!-- Testimonial Card 1 -->
     <div class="testimonial-card bg-white p-6 md:p-8 rounded-2xl shadow-xl text-left flex-shrink-0 w-72 sm:w-80 hover:shadow-2xl transition transform hover:-translate-y-1">
-      <p class="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">We struggled with inconsistent lead flow for months, and frankly, our outreach felt like a shot in the dark. AlignWin brought a level of precision and quality we just couldn't achieve internally. Our pipeline is now predictable, and the quality of appointments is outstanding. It's been a game-changer for our sales targets."</p>
+      <p class="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">
+        We struggled with inconsistent lead flow for months, and frankly, our outreach felt like a shot in the dark. AlignWin brought a level of precision and quality we just couldn't achieve internally. Our pipeline is now predictable, and the quality of appointments is outstanding. It's been a game-changer for our sales targets.
+      </p>
       <div class="flex items-center">
         <img src="https://cdn-icons-png.flaticon.com/512/147/147142.png" alt="Cartoon avatar" class="w-10 h-10 md:w-12 md:h-12 rounded-full mr-3 md:mr-4 object-cover border-2 border-orange-500">
         <span class="font-semibold text-gray-900 text-sm md:text-base">Jose S.</span>
@@ -541,7 +322,9 @@
 
     <!-- Testimonial Card 2 -->
     <div class="testimonial-card bg-white p-6 md:p-8 rounded-2xl shadow-xl text-left flex-shrink-0 w-72 sm:w-80 hover:shadow-2xl transition transform hover:-translate-y-1">
-      <p class="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">Before AlignWin, I was constantly bogged down with prospecting, pulling me away from strategic growth. Now, my team and I spend our time where it truly matters: closing deals. The sheer relief of knowing that initial outreach is expertly handled is immense. They genuinely transformed our daily operations."</p>
+      <p class="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">
+        Before AlignWin, I was constantly bogged down with prospecting, pulling me away from strategic growth. Now, my team and I spend our time where it truly matters: closing deals. The sheer relief of knowing that initial outreach is expertly handled is immense. They genuinely transformed our daily operations.
+      </p>
       <div class="flex items-center">
         <img src="https://cdn-icons-png.flaticon.com/512/147/147140.png" alt="Cartoon avatar" class="w-10 h-10 md:w-12 md:h-12 rounded-full mr-3 md:mr-4 object-cover border-2 border-orange-500">
         <span class="font-semibold text-gray-900 text-sm md:text-base">William J.</span>
@@ -550,16 +333,17 @@
 
     <!-- Testimonial Card 3 -->
     <div class="testimonial-card bg-white p-6 md:p-8 rounded-2xl shadow-xl text-left flex-shrink-0 w-72 sm:w-80 hover:shadow-2xl transition transform hover:-translate-y-1">
-      <p class="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">Outsourcing outreach felt like a big step, but with AlignWin, it was the smartest move we've made this year. We're getting qualified prospects without the overhead or training headaches. They simply deliver what they promise, allowing us to redirect resources to core business growth. Highly recommend their efficiency."</p>
+      <p class="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">
+        Outsourcing outreach felt like a big step, but with AlignWin, it was the smartest move we've made this year. We're getting qualified prospects without the overhead or training headaches. They simply deliver what they promise, allowing us to redirect resources to core business growth. Highly recommend their efficiency.
+      </p>
       <div class="flex items-center">
         <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Cartoon avatar" class="w-10 h-10 md:w-12 md:h-12 rounded-full mr-3 md:mr-4 object-cover border-2 border-orange-500">
         <span class="font-semibold text-gray-900 text-sm md:text-base">Mark T</span>
       </div>
     </div>
-
   </div>
 
-  <!-- Dots navigation -->
+  <!-- Dots -->
   <div id="dots" class="mt-6 md:mt-8 flex justify-center gap-3"></div>
 </section>
 
@@ -570,15 +354,11 @@
   const cardWidth = (cards[0] ? cards[0].offsetWidth + 16 : 288); // gap included
   let currentIndex = 0;
 
-  // Create dots
   cards.forEach((_, i) => {
     const dot = document.createElement('span');
     dot.classList.add('dot');
     if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => {
-      currentIndex = i;
-      updateSlider();
-    });
+    dot.addEventListener('click', () => { currentIndex = i; updateSlider(); });
     dotsContainer.appendChild(dot);
   });
 
@@ -587,7 +367,6 @@
     document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
   }
 
-  // Next/Prev buttons
   document.getElementById('next').addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % cards.length;
     updateSlider();
@@ -597,23 +376,29 @@
     updateSlider();
   });
 
-  // Auto-slide every 5 seconds
   setInterval(() => {
     currentIndex = (currentIndex + 1) % cards.length;
     updateSlider();
   }, 5000);
 </script>
-
+<!-- CTA -->
+    <div class="text-center mt-12 md:mt-16">
+      <p class="text-xl md:text-2xl font-bold text-black mb-4 md:mb-6">
+        Skip the burnout<br>
+        Get hot leads delivered instantly in real-time
+      </p>
+      <a href="strategy.html" class="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-base md:text-lg px-8 md:px-10 py-3 md:py-4 rounded-full hover:shadow-xl transition inline-block">
+        Start Getting Leads Now
+      </a>
+    </div>
 <!-- ===================== ABOUT US SECTION ===================== -->
 <section id="about" class="w-full bg-[#F8FBFF] py-16 md:py-28 relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 flex flex-col gap-20 relative">
 
-    <!-- ===== Section 1: Intro ===== -->
+    <!-- Intro -->
     <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
       <div class="flex-1 space-y-4 md:space-y-6 text-center md:text-left">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black">
-          About Us
-        </h2>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black">About Us</h2>
         <p class="text-base md:text-lg lg:text-xl text-gray-700 font-medium leading-relaxed">
           At <span class="font-bold">AlignWin</span>, we help businesses grow by delivering qualified, motivated leads through professional cold calling and lead management. Focus on closing deals—not chasing them.
         </p>
@@ -623,61 +408,46 @@
       </div>
     </div>
 
-    <!-- ===== Section 2: How We Work (6 points) ===== -->
+    <!-- How We Work (6 points) -->
     <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative">
       <div class="flex-1 space-y-6 z-10">
-
         <h3 class="text-2xl md:text-3xl font-bold text-black">We handle everything behind the scenes:</h3>
-
-        <!-- Icon Cards with vertical line -->
         <div class="relative mt-6 md:mt-10">
-
-          <!-- Vertical line (hidden on small screens) -->
           <div class="hidden md:block absolute top-10 left-1/2 w-1 bg-orange-300 h-full transform -translate-x-1/2 rounded-full z-0"></div>
-
-          <!-- Cards container -->
           <div class="flex flex-col gap-4 md:gap-6">
-
             <div class="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-xl shadow-lg hover:shadow-2xl transition relative z-10">
               <div class="text-3xl md:text-4xl animate-bounce">📞</div>
               <p class="font-semibold text-gray-800 text-sm md:text-base">Trained American-English–speaking callers</p>
             </div>
-
             <div class="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-xl shadow-lg hover:shadow-2xl transition relative z-10">
               <div class="text-3xl md:text-4xl animate-bounce delay-100">📝</div>
               <p class="font-semibold text-gray-800 text-sm md:text-base">Proven scripts and personality-based conversations</p>
             </div>
-
             <div class="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-xl shadow-lg hover:shadow-2xl transition relative z-10">
               <div class="text-3xl md:text-4xl animate-bounce delay-200">📊</div>
               <p class="font-semibold text-gray-800 text-sm md:text-base">Real-time lead delivery</p>
             </div>
-
             <div class="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-xl shadow-lg hover:shadow-2xl transition relative z-10">
               <div class="text-3xl md:text-4xl animate-bounce delay-300">✅</div>
               <p class="font-semibold text-gray-800 text-sm md:text-base">Quality control on every call</p>
             </div>
-
             <div class="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-xl shadow-lg hover:shadow-2xl transition relative z-10">
               <div class="text-3xl md:text-4xl animate-bounce delay-400">📋</div>
               <p class="font-semibold text-gray-800 text-sm md:text-base">Campaign management, lists, and dialer setup</p>
             </div>
-
             <div class="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-xl shadow-lg hover:shadow-2xl transition relative z-10">
               <div class="text-3xl md:text-4xl animate-bounce delay-500">📑</div>
               <p class="font-semibold text-gray-800 text-sm md:text-base">Transparent reporting and daily updates</p>
             </div>
-
           </div>
         </div>
       </div>
-
       <div class="flex-1 mt-8 md:mt-0">
         <img src="images/work-illustration.jpg" alt="Work Illustration" class="rounded-2xl shadow-xl w-full h-auto animate-fadeIn">
       </div>
     </div>
 
-    <!-- ===== Section 3: Our Mission ===== -->
+    <!-- Mission -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12">
       <div class="flex-1 space-y-4 md:space-y-6">
         <h3 class="text-2xl md:text-3xl font-bold text-black">Our Mission</h3>
@@ -695,118 +465,88 @@
       <div class="flex-1 mt-6 md:mt-0">
         <img src="images/mission-illustration.jpg" alt="Mission Illustration" class="rounded-2xl shadow-xl w-full h-auto animate-fadeIn">
       </div>
+  </div>
+</section>
+
+<!-- ===================== HERO / GROW SECTION ===================== -->
+<section class="grow-section relative bg-white text-black py-20 px-6 md:py-28 md:px-20 overflow-hidden">
+  <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16 max-w-7xl mx-auto">
+
+    <!-- LEFT -->
+    <div class="grow-left flex-1 space-y-6 md:space-y-8 text-center md:text-left">
+      <div class="icon text-5xl md:text-6xl animate-bounce animate-fadeIn delay-0">🚀</div>
+      <h1 class="headline text-3xl md:text-5xl lg:text-6xl font-extrabold leading-snug md:leading-tight animate-fadeIn delay-200">
+        <span class="block sm:inline highlight bg-black text-white px-3 py-1 md:px-4 md:py-2 rounded-lg">Ready</span> 
+        <span class="block sm:inline">To</span> 
+        <span class="block sm:inline grow border-b-6 md:border-b-8 border-black">Grow?</span>
+      </h1>
+      <p class="subtext text-base md:text-lg lg:text-xl font-medium animate-fadeIn delay-400">
+        Let us handle all your inbound calls so you can focus on investing, closing deals, and growing your business.
+      </p>
+      <div class="mt-10 md:mt-16 animate-fadeIn delay-600">
+        <a href="strategy.html" class="btn-demo bg-black text-white font-bold text-base md:text-lg px-8 md:px-10 py-3 md:py-4 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transform transition-transform duration-300 animate-float">
+          Get Started
+        </a>
+      </div>
     </div>
 
-    <!-- ===== NEW CTA Inline ===== -->
-    <div class="text-center mt-12 md:mt-16">
-      <p class="text-xl md:text-2xl font-bold text-black mb-4 md:mb-6">
-        Skip the burnout<br>
-        Get hot leads delivered instantly in real-time
-      </p>
-      <a href="strategy.html" class="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-base md:text-lg px-8 md:px-10 py-3 md:py-4 rounded-full hover:shadow-xl transition inline-block">
-        Start Getting Leads Now
-      </a>
+    <!-- RIGHT -->
+    <div class="grow-right flex-1 relative w-full mt-10 md:mt-0">
+      <div class="absolute top-0 left-0 w-full h-full overflow-hidden rounded-2xl hidden sm:block">
+        <div class="shape bg-black/10 w-20 h-20 md:w-24 md:h-24 rounded-lg absolute top-8 left-8 animate-shape1"></div>
+        <div class="shape bg-black/20 w-24 h-24 md:w-32 md:h-32 rounded-full absolute bottom-16 right-12 md:bottom-20 md:right-16 animate-shape2"></div>
+        <div class="shape bg-black/5 w-16 h-16 md:w-20 md:h-20 rounded-xl absolute top-1/2 left-1/3 animate-shape3"></div>
+      </div>
+      <img src="images/team.jpg" alt="team" class="rounded-2xl shadow-2xl w-full h-auto max-h-[400px] md:max-h-[600px] object-cover animate-fadeIn delay-800 relative z-10">
     </div>
 
   </div>
 </section>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlignWin Hero</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white text-black">
-
-  <!-- ================= HERO / GROW SECTION ================= -->
-  <section class="grow-section relative bg-white text-black py-20 px-6 md:py-28 md:px-20 overflow-hidden">
-    <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16 max-w-7xl mx-auto">
-
-      <!-- LEFT COLUMN -->
-      <div class="grow-left flex-1 space-y-6 md:space-y-8 text-center md:text-left">
-        <div class="icon text-5xl md:text-6xl animate-bounce animate-fadeIn delay-0">🚀</div>
-
-        <!-- Headline -->
-        <h1 class="headline text-3xl md:text-5xl lg:text-6xl font-extrabold leading-snug md:leading-tight animate-fadeIn delay-200">
-          <span class="block sm:inline highlight bg-black text-white px-3 py-1 md:px-4 md:py-2 rounded-lg">Ready</span> 
-          <span class="block sm:inline">To</span> 
-          <span class="block sm:inline grow border-b-6 md:border-b-8 border-black">Grow?</span>
-        </h1>
-
-        <!-- Subtext -->
-        <p class="subtext text-base md:text-lg lg:text-xl font-medium animate-fadeIn delay-400">
-          Let us handle all your inbound calls so you can focus on investing, closing deals, and growing your business.
-        </p>
-
-        <!-- CTA -->
-        <div class="mt-10 md:mt-16 animate-fadeIn delay-600">
-          <a href="strategy.html" class="btn-demo bg-black text-white font-bold text-base md:text-lg px-8 md:px-10 py-3 md:py-4 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transform transition-transform duration-300 animate-float">
-            Get Started
-          </a>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN -->
-      <div class="grow-right flex-1 relative w-full mt-10 md:mt-0">
-        <!-- Shapes hidden on small screens -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden rounded-2xl hidden sm:block">
-          <div class="shape bg-black/10 w-20 h-20 md:w-24 md:h-24 rounded-lg absolute top-8 left-8 animate-shape1"></div>
-          <div class="shape bg-black/20 w-24 h-24 md:w-32 md:h-32 rounded-full absolute bottom-16 right-12 md:bottom-20 md:right-16 animate-shape2"></div>
-          <div class="shape bg-black/5 w-16 h-16 md:w-20 md:h-20 rounded-xl absolute top-1/2 left-1/3 animate-shape3"></div>
-        </div>
-
-        <!-- Main Image -->
-        <img src="images/team.jpg" alt="team" class="rounded-2xl shadow-2xl w-full h-auto max-h-[400px] md:max-h-[600px] object-cover animate-fadeIn delay-800 relative z-10">
-
-      </div>
-
-    </div>
-  </section>
 <!-- ===== FOOTER ===== -->
-<footer id="contact" class="w-full bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white py-12 md:py-16 relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start gap-8 md:gap-12">
+<footer id="contact" class="bg-black text-white py-12 text-center">
+  <div class="container mx-auto px-4">
 
-    <!-- SOCIAL ICONS -->
-    <div class="flex justify-center md:justify-start items-center flex-wrap gap-4 md:gap-5">
-      <a href="#" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-200 transition transform hover:scale-110 shadow-md">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" class="w-5 md:w-6" />
+    <!-- Copyright -->
+    <p class="mb-4 text-gray-400 text-sm sm:text-base">
+      &copy; <span id="current-year"></span> AlignWin. All rights reserved.
+    </p>
+
+    <!-- Social Icons -->
+    <div class="flex flex-wrap justify-center gap-6 mb-6">
+      <a href="https://www.facebook.com/share/1GTMtGetqJ/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-transform duration-300 transform hover:scale-110" aria-label="Facebook">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 13.5h2.7l.3-3H14V8.7c0-.8.7-1.3 1.5-1.3H17V4.92c-.3-.04-1.2-.1-2.2-.1-2.5 0-4.2 1.5-4.2 4.4v2H9v3h3v8h4v-8h3z"></path></svg>
       </a>
-      <a href="#" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-200 transition transform hover:scale-110 shadow-md">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="w-5 md:w-6" />
+      <a href="https://www.instagram.com/alignwin?igsh=Y2U0eGc5ZHp1OWQy" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-transform duration-300 transform hover:scale-110" aria-label="Instagram">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2A4.8 4.8 0 004.8 7.8v8.4a4.8 4.8 0 004.8 4.8h6.4a4.8 4.8 0 004.8-4.8V7.8a4.8 4.8 0 00-4.8-4.8H7.6zm9.65 1.7a1.45 1.45 0 100 2.9 1.45 1.45 0 000-2.9zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"></path></svg>
       </a>
-      <a href="#" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-200 transition transform hover:scale-110 shadow-md">
-        <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" class="w-5 md:w-6" />
-      </a>
-      <a href="#" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-200 transition transform hover:scale-110 shadow-md">
-        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670151.png" class="w-5 md:w-6" />
+      <a href="https://x.com/alignwin" target="_blank" rel="noopener noreferrer" aria-label="X"
+   class="hover:text-white transition-transform duration-300 transform hover:scale-110 will-change-transform">
+  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M18.9.8H21.2L14.7 9.4 22.9 24H16.6L11.4 15.3 5.4 24H3.1L10.2 13.1 2.1.8H8.5L13.1 7.4 18.9.8ZM17.4 21.8H19.2L7.7 2.1H5.7L17.4 21.8Z"/>
+  </svg>
+</a>
+
+      <a href="https://www.linkedin.com/company/alignwin/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-transform duration-300 transform hover:scale-110" aria-label="LinkedIn">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.23 0H1.77C.79 0 0 .77 0 1.77v20.46C0 23.23.77 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.77V1.77C24 .77 23.23 0 22.23 0zM7.3 20.33H3.67V8H7.3v12.33zm-1.8-13.8c-1.15 0-2.07-.92-2.07-2.05 0-1.13.92-2.05 2.07-2.05s2.07.92 2.07 2.05c0 1.13-.92 2.05-2.07 2.05zm14.83 13.8h-3.67V14.5c0-1.46-.52-2.45-1.82-2.45-1.01 0-1.61.68-1.87 1.34-.1.23-.13.55-.13.87v6.07H9.13s.05-11.1 0-12.33h3.67v1.5c.5-.72 1.34-1.75 3.32-1.75 2.42 0 4.25 1.58 4.25 4.96v7.62z"></path></svg>
       </a>
     </div>
 
-    <!-- CONTACT INFO -->
-    <div class="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start gap-6 md:gap-12 text-center md:text-left flex-wrap">
+    <!-- Contact Info -->
+    <p class="text-gray-400 text-sm sm:text-base">
+      Email: <a href="mailto:support@alignwin.com" class="hover:underline">support@alignwin.com</a> |
+      Phone: <a href="tel:+16146650929" class="hover:underline">+1 (614) 665-0929</a>
+    </p>
 
-      <!-- PHONE -->
-      <div class="flex flex-col items-center md:items-start">
-        <p class="uppercase text-gray-400 font-semibold text-xs md:text-sm"></p>
-        <p class="text-sm md:text-lg font-bold text-white"></p>
-      </div>
-
-      <!-- EMAIL -->
-      <div class="flex flex-col items-center md:items-start">
-        <p class="uppercase text-gray-400 font-semibold text-xs md:text-sm">Contact Mail</p>
-        <p class="text-sm md:text-lg font-bold text-white">support@alignwin.com</p>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- COPYRIGHT -->
-  <div class="mt-8 md:mt-12 text-center text-gray-400 text-xs md:text-sm">
-    &copy; 2025 AlignWin. All rights reserved.
   </div>
 </footer>
 
+<!-- Dynamic Year Script -->
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 
+  <!-- JS -->
+<script src="script.js"></script>
+</body>
+</html>
