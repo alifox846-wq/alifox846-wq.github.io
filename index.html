@@ -68,6 +68,16 @@
     .dot.active { background: #f97316; }
   </style>
 </head>
+<script>
+function setVH() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', setVH);
+window.addEventListener('load', setVH);
+setVH();
+</script>
 <body class="antialiased text-gray-900">
 
 <!-- ================= HEADER ================= -->
@@ -132,23 +142,20 @@
 </script>
 
 <!-- ================= HERO SECTION ================= -->
-  <section 
-id="hero" class="relative w-full min-h-screen flex items-center justify-center bg-black pt-32 md:pt-24 overflow-hidden">
+<section id="hero" class="relative w-full min-h-screen flex items-center justify-center bg-black pt-24 overflow-hidden">
   <!-- Background Image (Optimized Loading) -->
-  <picture class="absolute inset-0 w-full h-full">
-    <source srcset="images/background-small.jpg" media="(max-width:768px)">
-    <img 
-      src="images/background.jpg"
-      alt="Business growth background"
-      class="w-full h-full object-cover"
-      loading="eager"
-      decoding="async"
-    >
+  <div class="absolute inset-0 w-full h-full">
+  <img 
+    src="images/background.jpg"
+    alt="Business growth background"
+    class="w-full h-full object-cover object-center md:object-cover"
+    style="min-height:100vh"
+  >
+</div>
   </picture>
 
   <!-- Gradient Overlay -->
-  <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80"></div>
-
+<div class="absolute inset-0 bg-black/50 md:bg-black/70"></div>
   <!-- Content -->
   <div class="relative z-10 max-w-5xl px-6 text-center">
 
@@ -575,9 +582,9 @@ Did Facebook ads - too expensive. Did direct mail - slow. Tried Batch Leads - me
     <p class="mb-4 text-gray-400 text-sm sm:text-base">
       &copy; <span id="current-year"></span> AlignWin. All rights reserved.
     </p>
-    <!-- Legal Links (ONLY ADDED PART) -->
+     <!-- Legal Links (ONLY ADDED PART) -->
     <p class="mb-4 text-gray-400 text-sm sm:text-base space-x-6">
-     <a href="/privacy.html" class="hover:underline hover:text-white">
+      <a href="/privacy.html" class="hover:underline hover:text-white">
   Privacy Policy
 </a>
 
@@ -585,6 +592,7 @@ Did Facebook ads - too expensive. Did direct mail - slow. Tried Batch Leads - me
   Terms & Conditions
 </a>
     </p>
+
 
     <!-- Social Icons -->
     <div class="flex flex-wrap justify-center gap-6 mb-6">
@@ -624,6 +632,3 @@ Did Facebook ads - too expensive. Did direct mail - slow. Tried Batch Leads - me
 <script src="script.js"></script>
 </body>
 </html>
-
-
-
