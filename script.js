@@ -14,32 +14,39 @@ document.addEventListener('DOMContentLoaded', () => {
   setVH();
   window.addEventListener('resize', setVH);
 
-
   /* ─────────────────────────────────────────────────────────
      OVERLAY LOCK MANAGER
   ───────────────────────────────────────────────────────── */
   const overlayLock = (() => {
     let count = 0;
     return {
-      lock()         { count++; document.body.style.overflow = 'hidden'; },
-      unlock()       { count = Math.max(0, count - 1); if (count === 0) document.body.style.overflow = ''; },
-      forceRelease() { count = 0; document.body.style.overflow = ''; },
+      lock() { 
+        count++; 
+        document.body.style.overflow = 'hidden'; 
+      },
+      unlock() { 
+        count = Math.max(0, count - 1); 
+        if (count === 0) document.body.style.overflow = ''; 
+      },
+      forceRelease() { 
+        count = 0; 
+        document.body.style.overflow = ''; 
+      },
     };
   })();
-
 
   /* ─────────────────────────────────────────────────────────
      MOBILE MENU
   ───────────────────────────────────────────────────────── */
-  const menuBtn       = document.getElementById('menu-btn');
-  const mobileNav     = document.getElementById('mobile-nav');
-  const menuOpenIcon  = document.getElementById('menu-open');
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  const menuOpenIcon = document.getElementById('menu-open');
   const menuCloseIcon = document.getElementById('menu-close');
 
   if (menuBtn && mobileNav) {
     const openMenu = () => {
       mobileNav.classList.add('is-open');
-      menuOpenIcon.style.display  = 'none';
+      menuOpenIcon.style.display = 'none';
       menuCloseIcon.style.display = 'block';
       overlayLock.lock();
       menuBtn.setAttribute('aria-expanded', 'true');
@@ -47,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeMenu = () => {
       mobileNav.classList.remove('is-open');
-      menuOpenIcon.style.display  = 'block';
+      menuOpenIcon.style.display = 'block';
       menuCloseIcon.style.display = 'none';
       overlayLock.unlock();
       menuBtn.setAttribute('aria-expanded', 'false');
@@ -57,21 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileNav.classList.contains('is-open') ? closeMenu() : openMenu();
     });
 
+    // Close menu when clicking a link
     mobileNav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
 
+    // Close on resize to desktop
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 1101) closeMenu();
     });
   }
 
-
   /* ─────────────────────────────────────────────────────────
      SCROLL ANIMATIONS
   ───────────────────────────────────────────────────────── */
   if ('IntersectionObserver' in window) {
-
     const heroAnimObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -88,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity   = '1';
+          entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
           cardObserver.unobserve(entry.target);
         }
@@ -98,23 +105,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll(
       '.service-card, .who-card, .advantage-card, .testi-card, .result-card, .result-proof-card'
     ).forEach(el => {
-      el.style.opacity    = '0';
-      el.style.transform  = 'translateY(28px)';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
       el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
       cardObserver.observe(el);
     });
-
   } else {
+    // Fallback for older browsers
     document.querySelectorAll('.anim, .anim-right').forEach(el => el.classList.add('visible'));
   }
-
 
   /* ─────────────────────────────────────────────────────────
      VIDEO MODAL
   ───────────────────────────────────────────────────────── */
   const videoTrigger = document.getElementById('video-card-trigger');
-  const heroModal    = document.getElementById('hero-modal');
-  const heroVid      = document.getElementById('hero-vid');
+  const heroModal = document.getElementById('hero-modal');
+  const heroVid = document.getElementById('hero-vid');
 
   if (videoTrigger && heroModal && heroVid) {
     videoTrigger.addEventListener('click', openModal);
@@ -126,25 +132,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
   /* ─────────────────────────────────────────────────────────
      ANIMATED COUNTERS
   ───────────────────────────────────────────────────────── */
-  const counters  = document.querySelectorAll('.stat-item__num[data-target]');
+  const counters = document.querySelectorAll('.stat-item__num[data-target]');
   let countersRun = false;
 
   const animateCounter = (el) => {
-    const target   = parseInt(el.getAttribute('data-target'), 10);
-    const suffix   = el.getAttribute('data-suffix') || '';
+    const target = parseInt(el.getAttribute('data-target'), 10);
+    const suffix = el.getAttribute('data-suffix') || '';
     const duration = 1800;
-    const steps    = 60;
-    let step       = 0;
+    const steps = 60;
+    let step = 0;
 
     const timer = setInterval(() => {
       step++;
       const progress = step / steps;
-      const eased    = 1 - Math.pow(1 - progress, 3);
-      const current  = Math.min(Math.round(eased * target), target);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.min(Math.round(eased * target), target);
       el.textContent = (current >= 1000 ? current.toLocaleString() : current) + suffix;
       if (step >= steps) clearInterval(timer);
     }, duration / steps);
@@ -164,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsBar = document.querySelector('.stats-bar');
     if (statsBar) statsObserver.observe(statsBar);
   } else {
+    // Fallback
     counters.forEach(el => {
       const target = parseInt(el.getAttribute('data-target'), 10);
       const suffix = el.getAttribute('data-suffix') || '';
@@ -171,13 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
   /* ─────────────────────────────────────────────────────────
-     ACTIVE NAV HIGHLIGHTING (scrollspy)
+     ACTIVE NAV HIGHLIGHTING (Scrollspy)
   ───────────────────────────────────────────────────────── */
   const sections = document.querySelectorAll('section[id], footer[id]');
   const navLinks = document.querySelectorAll('.header__nav a, .mobile-nav a');
-  const headerH  = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 76;
+  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 76;
 
   if (sections.length && navLinks.length) {
     const scrollspyObserver = new IntersectionObserver((entries) => {
@@ -198,13 +203,12 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(sec => scrollspyObserver.observe(sec));
   }
 
-
   /* ─────────────────────────────────────────────────────────
      ROI CALCULATOR
   ───────────────────────────────────────────────────────── */
   const LEADS_PER_CALLER = 35;
-  const CONVERSION_RATE  = 1 / 50;
-  const SERVICE_COST     = 1500;
+  const CONVERSION_RATE = 1 / 50;
+  const SERVICE_COST = 1500;
 
   const rc1 = document.getElementById('rc1');
   const rc2 = document.getElementById('rc2');
@@ -217,28 +221,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateROI() {
     if (!rc1 || !rc2) return;
-
     const callers = parseInt(rc1.value) || 1;
-    const profit  = parseInt(rc2.value) || 5000;
-    const leads   = callers * LEADS_PER_CALLER;
-    const deals   = +(leads * CONVERSION_RATE).toFixed(1);
+    const profit = parseInt(rc2.value) || 5000;
+
+    const leads = callers * LEADS_PER_CALLER;
+    const deals = +(leads * CONVERSION_RATE).toFixed(1);
     const revenue = Math.round(deals * profit);
-    const cost    = callers * SERVICE_COST;
-    const roi     = cost > 0 ? (revenue / cost).toFixed(1) : '0';
+    const cost = callers * SERVICE_COST;
+    const roi = cost > 0 ? (revenue / cost).toFixed(1) : '0';
 
-    const rc1Val     = document.getElementById('rc1-value');
-    const rc2Val     = document.getElementById('rc2-value');
-    const roiLeads   = document.getElementById('roi-leads');
-    const roiDeals   = document.getElementById('roi-deals');
+    const rc1Val = document.getElementById('rc1-value');
+    const rc2Val = document.getElementById('rc2-value');
+    const roiLeads = document.getElementById('roi-leads');
+    const roiDeals = document.getElementById('roi-deals');
     const roiRevenue = document.getElementById('roi-revenue');
-    const roiRoas    = document.getElementById('roi-roas');
+    const roiRoas = document.getElementById('roi-roas');
 
-    if (rc1Val)     rc1Val.textContent     = callers + (callers === 1 ? ' caller' : ' callers');
-    if (rc2Val)     rc2Val.textContent     = '$' + profit.toLocaleString();
-    if (roiLeads)   roiLeads.textContent   = '~' + leads + ' leads';
-    if (roiDeals)   roiDeals.textContent   = '~' + deals + ' deals';
+    if (rc1Val) rc1Val.textContent = callers + (callers === 1 ? ' caller' : ' callers');
+    if (rc2Val) rc2Val.textContent = '$' + profit.toLocaleString();
+    if (roiLeads) roiLeads.textContent = '~' + leads + ' leads';
+    if (roiDeals) roiDeals.textContent = '~' + deals + ' deals';
     if (roiRevenue) roiRevenue.textContent = '$' + revenue.toLocaleString();
-    if (roiRoas)    roiRoas.textContent    = roi + 'X';
+    if (roiRoas) roiRoas.textContent = roi + 'X';
 
     updateSliderTrack(rc1);
     updateSliderTrack(rc2);
@@ -248,14 +252,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (rc2) rc2.addEventListener('input', updateROI);
   updateROI();
 
-
   /* ─────────────────────────────────────────────────────────
      TESTIMONIAL SLIDER
   ───────────────────────────────────────────────────────── */
   const track = document.getElementById('testi-track');
-  const dots  = document.querySelectorAll('.testi-dot');
-  const prev  = document.getElementById('testi-prev');
-  const next  = document.getElementById('testi-next');
+  const dots = document.querySelectorAll('.testi-dot');
+  const prev = document.getElementById('testi-prev');
+  const next = document.getElementById('testi-next');
   const total = document.querySelectorAll('.testi-slide').length;
   let current = 0;
   let autoTimer;
@@ -266,36 +269,51 @@ document.addEventListener('DOMContentLoaded', () => {
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
-  function startAuto() { autoTimer = setInterval(() => goTo(current + 1), 5000); }
-  function stopAuto()  { clearInterval(autoTimer); }
+  function startAuto() { 
+    autoTimer = setInterval(() => goTo(current + 1), 5000); 
+  }
+  function stopAuto() { 
+    clearInterval(autoTimer); 
+  }
 
   if (prev) prev.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
   if (next) next.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
-  dots.forEach(dot => dot.addEventListener('click', () => { stopAuto(); goTo(+dot.dataset.index); startAuto(); }));
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => { 
+      stopAuto(); 
+      goTo(+dot.dataset.index); 
+      startAuto(); 
+    });
+  });
 
   if (track) {
     let startX = 0;
-    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; stopAuto(); }, { passive: true });
-    track.addEventListener('touchend',   e => {
+    track.addEventListener('touchstart', e => { 
+      startX = e.touches[0].clientX; 
+      stopAuto(); 
+    }, { passive: true });
+
+    track.addEventListener('touchend', e => {
       const diff = startX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
       startAuto();
     }, { passive: true });
+
     track.addEventListener('mouseenter', stopAuto);
     track.addEventListener('mouseleave', startAuto);
   }
 
   startAuto();
 
-}); // end DOMContentLoaded
-
+}); // End of DOMContentLoaded
 
 /* ─────────────────────────────────────────────────────────
-   VIDEO MODAL — global helpers
+   VIDEO MODAL — Global Helpers
 ───────────────────────────────────────────────────────── */
 function openModal() {
   const modal = document.getElementById('hero-modal');
-  const vid   = document.getElementById('hero-vid');
+  const vid = document.getElementById('hero-vid');
   if (!modal) return;
 
   modal.classList.add('is-open');
@@ -313,13 +331,14 @@ function openModal() {
 
 function closeModal() {
   const modal = document.getElementById('hero-modal');
-  const vid   = document.getElementById('hero-vid');
+  const vid = document.getElementById('hero-vid');
 
   if (modal) {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
+
   if (vid) {
     vid.pause();
     vid.currentTime = 0;
@@ -332,7 +351,6 @@ document.addEventListener('keydown', e => {
     if (modal && modal.classList.contains('is-open')) closeModal();
   }
 });
-
 
 /* ─────────────────────────────────────────────────────────
    FAQ ACCORDION
