@@ -206,9 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ─────────────────────────────────────────────────────────
      ROI CALCULATOR
   ───────────────────────────────────────────────────────── */
-  const LEADS_PER_CALLER = 35;
-  const CONVERSION_RATE = 1 / 50;
-  const SERVICE_COST = 1500;
+  const LEADS_PER_CALLER = 40;
+const CONVERSION_RATE = 1 / 40;
+const SERVICE_COST = 2000;
 
   const rc1 = document.getElementById('rc1');
   const rc2 = document.getElementById('rc2');
@@ -225,8 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const profit = parseInt(rc2.value) || 5000;
 
     const leads = callers * LEADS_PER_CALLER;
-    const deals = +(leads * CONVERSION_RATE).toFixed(1);
-    const revenue = Math.round(deals * profit);
+const deals = Math.round(leads * CONVERSION_RATE);    const revenue = Math.round(deals * profit);
     const cost = callers * SERVICE_COST;
     const roi = cost > 0 ? (revenue / cost).toFixed(1) : '0';
 
