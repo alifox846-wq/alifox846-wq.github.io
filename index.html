@@ -479,8 +479,7 @@
     .modal__quote-mark { font-size: 42px; line-height: 1; color: #FF8C00; opacity: 0.7; font-family: Georgia, serif; margin-top: -8px; flex-shrink: 0; }
     .modal__quote p { font-size: 15px; font-weight: 500; color: white; line-height: 1.65; margin-bottom: 14px; }
     .modal__author { display: flex; align-items: center; gap: 10px; }
-    .modal__author img { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid #FF8C00; display: block; }
-    .modal__author-name { font-size: 13px; font-weight: 700; color: #FF8C00; }
+.modal__author img { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid #FF8C00; display: block; image-rendering:-webkit-optimize-contrast; image-rendering:crisp-edges; }    .modal__author-name { font-size: 13px; font-weight: 700; color: #FF8C00; }
     .modal__author-role { font-size: 11px; color: rgba(255,255,255,0.4); }
     .modal__author-stars { margin-left: auto; color: #f59e0b; font-size: 13px; }
     .modal__video { width: 100%; display: block; max-height: 420px; background: #000; object-fit: contain; }
@@ -670,7 +669,7 @@
     .testi-avatar {
       width: 52px; height: 52px; min-width: 52px;
       border-radius: 50%;
-      object-fit: cover; object-position: center top;
+object-fit: cover; object-position: center 12%;
       border: 2px solid var(--orange);
       flex-shrink: 0;
     }
@@ -1029,30 +1028,6 @@
     </div>
   </div>
 </div>
-<!-- ================= GUARANTEE ================= -->
-<section aria-labelledby="guarantee-heading" style="background:#0a0a0a; padding:100px 24px 120px;">
-  <div style="max-width:760px; margin:0 auto; text-align:center;">
-    <div style="margin-bottom:32px;" aria-hidden="true">
-      <div style="width:92px; height:92px; margin:0 auto; background:linear-gradient(135deg,#FF8C00,#FF3D00); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 60px rgba(255,140,0,0.5);">
-        <span style="font-size:48px;">🛡️</span>
-      </div>
-    </div>
-    <h2 id="guarantee-heading" style="font-size:clamp(36px,5.5vw,52px); font-weight:900; color:white; margin-bottom:28px; line-height:1.1; font-family:var(--font-display);">
-      Our Ironclad Guarantee
-    </h2>
-    <div style="background:#111; border-radius:24px; padding:48px 40px; border:1px solid rgba(255,140,0,0.25); box-shadow:0 20px 60px rgba(0,0,0,0.5);">
-      <p style="color:#ddd; font-size:19px; line-height:1.78; max-width:620px; margin:0 auto;">
-        We guarantee a minimum number of qualified motivated seller leads every month.<br><br>
-        If we fall short, we will either
-<span style="color:#FF8C00; font-weight:900; font-size:20px;">refund 50% of that month's payment</span> — or continue working at
-<span style="color:#FF8C00; font-weight:900; font-size:20px;">no extra charge</span> until we hit the target.
-      </p>
-      <p style="color:#aaa; margin-top:32px; font-size:15.5px;">
-        No excuses. No fine print. Your success is our commitment.
-      </p>
-    </div>
-  </div>
-</section>
 <!-- ================= SERVICES ================= -->
 <section id="services" class="section section-dark-2">
   <div class="container">
@@ -1165,24 +1140,23 @@
 <div class="calc-wrapper">
   <div class="calc-card">
     <h3>ROI Calculator</h3>
-    <p>Move the sliders to instantly see your potential return. Based on ~35 leads per caller/month and 1 deal per 50 leads.</p>
-    <div class="calc-questions" style="gap:32px;">
+<p>Move the sliders to instantly see your potential return. Based on ~40 leads per caller/month and 1 deal per 40 leads.</p>    <div class="calc-questions" style="gap:32px;">
       <div class="calc-q">
         <p>Number of Cold Callers</p>
-        <input type="range" id="rc1" min="1" max="10" value="1" aria-label="Number of callers">
+        <input type="range" id="rc1" min="1" max="15" value="2" aria-label="Number of callers">
         <div class="calc-range-row">
           <span>1</span>
           <span id="rc1-value" class="calc-range-val" style="color:#FF8C00;">1 caller</span>
-          <span>10</span>
+<span>15</span>
         </div>
       </div>
       <div class="calc-q">
         <p>Avg. Profit Per Deal</p>
-        <input type="range" id="rc2" min="1000" max="50000" value="5000" step="500" aria-label="Profit per deal">
-        <div class="calc-range-row">
-          <span>$1k</span>
-          <span id="rc2-value" class="calc-range-val" style="color:#FF8C00;">$5,000</span>
-          <span>$50k</span>
+<input type="range" id="rc2" min="5000" max="100000" value="10000" step="5000" aria-label="Profit per deal">
+<div class="calc-range-row">
+  <span>$5k</span>
+<span id="rc2-value" class="calc-range-val" style="color:#FF8C00;">$10,000</span>
+          <span>$100k</span>
         </div>
       </div>
     </div>
@@ -1228,8 +1202,8 @@
             <div class="testi-stars" aria-label="5 stars">★★★★★</div>
             <p class="testi-quote">"They told me to expect 20–40 leads a month — I hit over 50 in my first month and I've already got contracts out. Best investment I've made for my business this year."</p>
             <div class="testi-footer">
-              <img class="testi-avatar" src="images/nate-avatar.jpeg" alt="Nate" width="52" height="52" loading="lazy" style="object-position:center top;">
-              <div>
+<img class="testi-avatar" src="images/nate-avatar.jpg" alt="Nate" width="52" height="52" loading="lazy" style="object-fit:cover; object-position:center 12%;">
+<div>
                 <div class="testi-name">Nate</div>
                 <div class="testi-role">Real Estate Investor · Florida</div>
               </div>
