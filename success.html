@@ -1,39 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ── Structured Data ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AlignWin",
+    "url": "https://alignwin.com",
+    "email": "support@alignwin.com",
+    "telephone": "+16149578819"
+  }
+  </script>
+  <!-- ── Core Meta ── -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thanks — AlignWin</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Favicon -->
-  <link rel="icon" href="images/favicon.png" type="image/png">
+  <meta name="description" content="Thank you for reaching out to AlignWin. We'll be in touch shortly.">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- ── Icons ── -->
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
   <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <title>Thanks — AlignWin</title>
+  <!-- ── Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
   <style>
-    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards; }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-    .logo-img { width: 44px; height: 44px; object-fit: contain; }
+    /* ============================================================
+       DESIGN TOKENS — identical to index.html
+    ============================================================ */
+    :root {
+      --bg:           #0A0A0A;
+      --surface:      #111111;
+      --border:       rgba(255,255,255,0.07);
+      --border-warm:  rgba(255,140,0,0.22);
+      --orange:       #FF8C00;
+      --orange-hot:   #FF3D00;
+      --grad:         linear-gradient(90deg, #FF8C00, #FF3D00);
+      --text-1:       #FFFFFF;
+      --text-2:       rgba(255,255,255,0.65);
+      --text-3:       rgba(255,255,255,0.38);
+      --text-4:       rgba(255,255,255,0.22);
+      --r-md:         14px;
+      --r-lg:         20px;
+      --r-xl:         28px;
+      --r-full:       9999px;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       BACKGROUND LAYERS
+    ============================================================ */
+    .bg-glow {
+      position: fixed;
+      top: -10%; left: -15%;
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(255,100,0,0.15) 0%, rgba(255,61,0,0.06) 45%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-glow-right {
+      position: fixed;
+      bottom: -20%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(255,100,0,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,140,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,140,0,0.03) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       CARD
+    ============================================================ */
+    .card-wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 500px;
+      padding: 24px;
+    }
+
+    /* Orange glow halo */
+    .card-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 22px;
+      border-radius: calc(var(--r-xl) + 2px);
+      background: var(--grad);
+      opacity: 0.12;
+      filter: blur(24px);
+      z-index: -1;
+    }
+
+    .card {
+      background: rgba(13,13,13,0.97);
+      border: 1px solid rgba(255,140,0,0.16);
+      border-radius: var(--r-xl);
+      padding: 52px 44px 48px;
+      text-align: center;
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.75);
+      opacity: 0;
+      transform: translateY(28px);
+      animation: fadeUp 0.65s 0.1s ease forwards;
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 36px 24px 36px; }
+      .card-wrap { padding: 16px; }
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Check icon ── */
+    .check-wrap {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.3s ease forwards;
+    }
+    .check-wrap svg { color: #22c55e; }
+
+    /* ── Section label ── */
+    .card-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.38s ease forwards;
+    }
+    .card-label::before {
+      content: '';
+      width: 18px; height: 2px;
+      background: var(--grad);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .card-label::after {
+      content: '';
+      width: 18px; height: 2px;
+      background: var(--grad);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Headline ── */
+    .card-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 6vw, 40px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1.2px;
+      color: var(--text-1);
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.45s ease forwards;
+    }
+    .card-title .text-grad {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Body text ── */
+    .card-body {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.52s ease forwards;
+    }
+
+    /* ── Countdown line ── */
+    .card-countdown {
+      font-size: 13px;
+      color: var(--text-4);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.58s ease forwards;
+    }
+    .card-countdown span {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      height: 3px;
+      background: rgba(255,255,255,0.07);
+      border-radius: var(--r-full);
+      overflow: hidden;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.6s ease forwards;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--grad);
+      border-radius: var(--r-full);
+      width: 100%;
+      transform-origin: left;
+      animation: shrink 5s linear forwards;
+    }
+    @keyframes shrink {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
+
+    /* ── CTA button ── */
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--grad);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 14px 32px;
+      border-radius: var(--r-full);
+      box-shadow: 0 4px 20px rgba(255,100,0,0.38);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.65s ease forwards;
+    }
+    .home-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 36px rgba(255,100,0,0.55);
+    }
+
+    /* ── Logo at bottom ── */
+    .card-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 32px;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.72s ease forwards;
+    }
+    .card-logo img { width: 26px; height: 26px; object-fit: contain; }
+    .card-logo-text {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-4);
+    }
   </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+<body>
 
-  <div class="fade-in bg-white p-8 rounded-2xl shadow-2xl text-center max-w-xl space-y-6">
-    <h1 class="text-3xl md:text-4xl font-bold text-orange-500">Thanks — we got it!</h1>
-    <p class="text-gray-700 text-lg">Our team will contact you shortly to schedule your strategy call.</p>
-    <p class="text-gray-500 text-sm">You will be redirected to the homepage in <span id="countdown">5</span> seconds.</p>
-    <a href="index.html" class="inline-block bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transform transition duration-300">
-      Return to Home
-    </a>
+  <!-- Background -->
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-glow-right" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- Card -->
+  <div class="card-wrap">
+    <div class="card" role="main">
+
+      <!-- Check icon -->
+      <div class="check-wrap" aria-hidden="true">
+        <svg width="34" height="34" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+
+      <!-- Label -->
+      <p class="card-label">Submitted</p>
+
+      <!-- Headline -->
+      <h1 class="card-title">Thanks — <span class="text-grad">we got it!</span></h1>
+
+      <!-- Body -->
+      <p class="card-body">Our team will reach out within 1 business day to schedule your strategy call.</p>
+
+      <!-- Countdown -->
+      <p class="card-countdown">Redirecting you to the homepage in <span id="countdown">5</span> seconds…</p>
+
+      <!-- Progress bar -->
+      <div class="progress-wrap" aria-hidden="true">
+        <div class="progress-bar"></div>
+      </div>
+
+      <!-- CTA -->
+      <a href="index.html" class="home-btn">
+        Return to Home
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+
+      <!-- Logo watermark -->
+      <div class="card-logo" aria-hidden="true">
+        <img src="images/logo.png" alt="">
+        <span class="card-logo-text">AlignWin</span>
+      </div>
+
+    </div>
   </div>
 
   <script>
-    let countdown = 5;
-    const countdownEl = document.getElementById('countdown');
-
-    const interval = setInterval(() => {
-      countdown--;
-      countdownEl.textContent = countdown;
-      if (countdown <= 0) {
-        clearInterval(interval);
+    let count = 5;
+    const el = document.getElementById('countdown');
+    const timer = setInterval(() => {
+      count--;
+      el.textContent = count;
+      if (count <= 0) {
+        clearInterval(timer);
         window.location.href = 'index.html';
       }
     }, 1000);
@@ -41,4 +367,3 @@
 
 </body>
 </html>
-
