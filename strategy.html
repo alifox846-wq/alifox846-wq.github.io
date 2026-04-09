@@ -233,7 +233,7 @@
     /* ── Title ── */
     .form-title {
       font-family: var(--font-display);
-      font-size: clamp(26px, 5vw, 36px);
+      font-size: clamp(24px, 5vw, 34px);
       font-weight: 900;
       line-height: 1.06;
       letter-spacing: -1px;
@@ -298,7 +298,6 @@
     .field:nth-child(1) { animation-delay: 0.28s; }
     .field:nth-child(2) { animation-delay: 0.36s; }
     .field:nth-child(3) { animation-delay: 0.44s; }
-    .field:nth-child(4) { animation-delay: 0.52s; }
 
     .field label {
       font-size: 11.5px;
@@ -308,8 +307,7 @@
       color: var(--text-3);
     }
 
-    .field input,
-    .field select {
+    .field input {
       width: 100%;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.09);
@@ -326,32 +324,14 @@
 
     .field input::placeholder { color: var(--text-4); }
 
-    .field input:focus,
-    .field select:focus {
+    .field input:focus {
       border-color: rgba(255,140,0,0.45);
       background: rgba(255,140,0,0.04);
       box-shadow: 0 0 0 3px rgba(255,140,0,0.09);
     }
 
-    /* Custom select arrow */
-    .select-wrap { position: relative; }
-    .select-wrap::after {
-      content: '';
-      position: absolute;
-      right: 16px; top: 50%;
-      transform: translateY(-50%);
-      width: 0; height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid rgba(255,255,255,0.3);
-      pointer-events: none;
-    }
-    .select-wrap select { padding-right: 40px; cursor: pointer; }
-    .field select option { background: #1a1a1a; color: var(--text-1); }
-
     /* Validation error states */
-    .field.has-error input,
-    .field.has-error select {
+    .field.has-error input {
       border-color: rgba(239,68,68,0.55);
       box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
     }
@@ -380,7 +360,7 @@
       box-shadow: 0 4px 24px rgba(255,100,0,0.38);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       opacity: 0;
-      animation: fadeUp 0.5s 0.6s ease forwards;
+      animation: fadeUp 0.5s 0.56s ease forwards;
     }
     .submit-btn:hover {
       transform: translateY(-2px) scale(1.02);
@@ -411,7 +391,7 @@
       font-size: 12px;
       color: var(--text-4);
       opacity: 0;
-      animation: fadeUp 0.5s 0.72s ease forwards;
+      animation: fadeUp 0.5s 0.68s ease forwards;
     }
     .trust-row svg { color: #22c55e; flex-shrink: 0; }
   </style>
@@ -442,15 +422,18 @@
       <div class="form-card">
 
         <p class="form-label">Free Strategy Call</p>
-        <h1 class="form-title">Get Started with <span class="text-grad">AlignWin</span></h1>
+
+        <!-- ✅ Updated headline -->
+        <h1 class="form-title">You're One Call Away From a <span class="text-grad">Full Pipeline.</span></h1>
 
         <div class="proof-row">
           <span class="proof-stars" aria-label="5 stars">★★★★★</span>
           <span class="proof-text">+50 clients · 300+ deals closed</span>
         </div>
 
+        <!-- ✅ Updated sub copy -->
         <p class="form-sub">
-          Fill out the form and we'll reach out within 1 business day — or call us directly at
+          Fill out the form and we'll reach out within a few hours to confirm your call time — or reach us directly at
           <a href="tel:+16149578819">+1 (614) 957-8819</a>
         </p>
 
@@ -467,6 +450,7 @@
             <input type="text" name="website" tabindex="-1" autocomplete="off">
           </div>
 
+          <!-- ✅ 3 fields only — dropdown removed -->
           <div class="form-fields">
 
             <div class="field" id="field-name">
@@ -487,20 +471,6 @@
               <span class="field-error">Please enter your phone number.</span>
             </div>
 
-            <div class="field" id="field-service">
-              <label for="campaign_type">What service are you interested in? *</label>
-              <div class="select-wrap">
-                <select id="campaign_type" name="campaign_type" required>
-                  <option disabled selected value="">Please select a service</option>
-                  <option value="motivated_seller_cold_calling">Motivated Seller Cold Calling (For Wholesalers)</option>
-                  <option value="acquisition_lead_generation">Acquisition Lead Generation (For Investors)</option>
-                  <option value="listing_appointment_setting">Listing Appointment Setting (For Realtors)</option>
-                  <option value="full_pipeline_management">Full Pipeline Management</option>
-                </select>
-              </div>
-              <span class="field-error">Please select a service.</span>
-            </div>
-
           </div>
 
           <button type="submit" class="submit-btn" id="submit-btn">
@@ -511,11 +481,12 @@
             </svg>
           </button>
 
+          <!-- ✅ Updated trust line -->
           <div class="trust-row" aria-hidden="true">
             <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
               <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
             </svg>
-            No spam. No commitment. We'll reach out within 1 business day.
+            No spam. No pressure. We'll reach out within a few hours.
           </div>
 
         </form>
@@ -531,14 +502,14 @@
     const btnArrow   = document.getElementById('btn-arrow');
 
     function validateField(wrap, input) {
-      const empty   = input.value.trim() === '';
+      const empty    = input.value.trim() === '';
       const badEmail = input.type === 'email' && !empty && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
       const invalid  = empty || badEmail;
       wrap.classList.toggle('has-error', invalid);
       return !invalid;
     }
 
-    form.querySelectorAll('input:not([type=hidden]):not([name=website]), select').forEach(el => {
+    form.querySelectorAll('input:not([type=hidden]):not([name=website])').forEach(el => {
       el.addEventListener('blur', () => {
         const wrap = el.closest('.field');
         if (wrap) validateField(wrap, el);
@@ -553,7 +524,7 @@
       e.preventDefault();
 
       let valid = true;
-      form.querySelectorAll('input:not([type=hidden]):not([name=website]), select').forEach(el => {
+      form.querySelectorAll('input:not([type=hidden]):not([name=website])').forEach(el => {
         const wrap = el.closest('.field');
         if (wrap && !validateField(wrap, el)) valid = false;
       });
