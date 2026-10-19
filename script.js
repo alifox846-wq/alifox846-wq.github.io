@@ -89,6 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
       el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
       cardObserver.observe(el);
     });
+
+    // Video testimonial cards — fade-up on mobile only (≤640px), skipped for reduced motion
+    const isMobileView = window.matchMedia('(max-width: 640px)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isMobileView && !reduceMotion) {
+      document.querySelectorAll('.vid-testi-grid .video-card').forEach(el => {
+        el.style.opacity    = '0';
+        el.style.transform  = 'translateY(28px)';
+        el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+        cardObserver.observe(el);
+      });
+    }
   } else {
     document.querySelectorAll('.anim, .anim-right').forEach(el => el.classList.add('visible'));
   }
@@ -127,6 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const izzyModalEl = document.getElementById('izzy-modal');
   if (izzyModalEl) {
     izzyModalEl.addEventListener('click', e => { if (e.target === izzyModalEl) closeIzzyModal(); });
+  }
+
+  // Cole video card
+  const coleCard = document.getElementById('video-card-cole');
+  if (coleCard) {
+    coleCard.addEventListener('click', openColeModal);
+    coleCard.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openColeModal(); });
+  }
+
+  // Cole modal backdrop click
+  const coleModalEl = document.getElementById('cole-modal');
+  if (coleModalEl) {
+    coleModalEl.addEventListener('click', e => { if (e.target === coleModalEl) closeColeModal(); });
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -331,6 +356,32 @@ function closeIzzyModal() {
 }
 
 /* ─────────────────────────────────────────────────────────
+   COLE VIDEO MODAL — Global Helpers
+───────────────────────────────────────────────────────── */
+function openColeModal() {
+  const modal = document.getElementById('cole-modal');
+  const vid   = document.getElementById('cole-vid');
+  if (!modal) return;
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  const closeBtn = modal.querySelector('button');
+  if (closeBtn) setTimeout(() => closeBtn.focus(), 50);
+  if (vid) { vid.load(); vid.play().catch(() => {}); }
+}
+
+function closeColeModal() {
+  const modal = document.getElementById('cole-modal');
+  const vid   = document.getElementById('cole-vid');
+  if (modal) {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  if (vid) { vid.pause(); vid.currentTime = 0; }
+}
+
+/* ─────────────────────────────────────────────────────────
    ESCAPE KEY — closes any open modal
 ───────────────────────────────────────────────────────── */
 document.addEventListener('keydown', e => {
@@ -339,6 +390,8 @@ document.addEventListener('keydown', e => {
     if (nateModal && nateModal.classList.contains('is-open')) closeModal();
     const izzyModal = document.getElementById('izzy-modal');
     if (izzyModal && izzyModal.classList.contains('is-open')) closeIzzyModal();
+    const coleModal = document.getElementById('cole-modal');
+    if (coleModal && coleModal.classList.contains('is-open')) closeColeModal();
   }
 });
 
